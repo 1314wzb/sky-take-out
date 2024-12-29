@@ -1,5 +1,7 @@
 package com.sky.result;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -8,16 +10,23 @@ import java.io.Serializable;
  * 后端统一返回结果
  * @param <T>
  */
+@ApiModel(description = "统一返回的数据模型")
 @Data
 public class Result<T> implements Serializable {
 
+    @ApiModelProperty("成功失败的代号")
     private Integer code; //编码：1成功，0和其它数字为失败
+
+    @ApiModelProperty("错误信息描述")
     private String msg; //错误信息
+
+    @ApiModelProperty("返回的数据")
     private T data; //数据
 
     public static <T> Result<T> success() {
         Result<T> result = new Result<T>();
         result.code = 1;
+        result.msg="操作成功";
         return result;
     }
 
@@ -25,6 +34,7 @@ public class Result<T> implements Serializable {
         Result<T> result = new Result<T>();
         result.data = object;
         result.code = 1;
+        result.msg="操作成功";
         return result;
     }
 

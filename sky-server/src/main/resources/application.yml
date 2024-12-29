@@ -21,6 +21,9 @@ mybatis:
     #开启驼峰命名
     map-underscore-to-camel-case: true
 
+
+# 日志配置
+# 日志级别  target > debug > info > warn > error
 logging:
   level:
     com:
