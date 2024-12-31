@@ -33,7 +33,7 @@ public interface EmployeeMapper {
     Page<Employee> page(EmployeePageQueryDTO dto);
 
     /**
-     * 跟新员工(根据id来跟新，使用动态的SQL更新)
+     * 更新员工(根据id来更新，使用动态的SQL更新)
      * @param employee
      */
     void update(Employee employee);
