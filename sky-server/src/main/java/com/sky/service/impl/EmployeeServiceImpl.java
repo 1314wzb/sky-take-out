@@ -1,16 +1,20 @@
 package com.sky.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.sky.constant.JwtClaimsConstant;
 import com.sky.constant.MessageConstant;
 import com.sky.constant.StatusConstant;
 import com.sky.context.BaseContext;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
+import com.sky.dto.EmployeePageQueryDTO;
 import com.sky.entity.Employee;
 import com.sky.exception.AccountLockedException;
 import com.sky.exception.AccountNotFoundException;
 import com.sky.exception.PasswordErrorException;
 import com.sky.mapper.EmployeeMapper;
+import com.sky.result.PageResult;
 import com.sky.service.EmployeeService;
 import com.sky.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
@@ -82,7 +86,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         //1.手动创建出来一个Employee对象
         Employee employee = new Employee();
 
-        //2.吧dto里面的数据搬运到employee对象身上
+        //2.把dto里面的数据搬运到employee对象身上
         //从源对象dto身上拷贝属性的值到目标对象employee身上，只会拷贝同名属性
         BeanUtils.copyProperties(employeeDTO,employee);
 
@@ -106,10 +110,91 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setCreateUser(empId);
         employee.setUpdateUser(empId);
 
-        employee.setPassword("123456");
+        //md5加密
+        String password = DigestUtils.md5DigestAsHex("123456".getBytes());
+        employee.setPassword(password);
 
         //4.调用dao完成工作
         employeeMapper.add(employee);
     }
 
+    /**
+     * 员工分页
+     * @param dto
+     * @return
+     */
+    @Override
+    public PageResult page(EmployeePageQueryDTO dto) {
+        //1. 使用分页插件，设置查询第几页，每页多少条
+        PageHelper.startPage(dto.getPage(),dto.getPageSize());
+
+        //2. 调用mapper
+        Page<Employee> p = employeeMapper.page(dto);
+
+        //3. 封装成PageResult对象并返回
+        return new PageResult(p.getTotal(),p.getResult());
+    }
+
+    /**
+     * 更新员工状态
+     * @param status
+     * @param id
+     */
+    @Override
+    public void updateStatus(Integer status, Long id) {
+
+        //1. 组装对象
+        //普通的方法设置
+        /*Employee employee = new Employee();
+        employee.setStatus(status);
+        employee.setId(id);*/
+
+        //高级的方法
+        Employee employee = Employee.builder()
+                .status(status)
+                .id(id)
+                .build();
+
+        //2. 调用mapper
+        employeeMapper.update(employee);
+    }
+
+    /**
+     * 根据ID查询员工
+     * @param id
+     * @return
+     */
+    @Override
+    public Employee findById(Long id) {
+
+        Employee employee = employeeMapper.findById(id);
+
+        //代表没有这个人或者ID写错了
+        if(employee == null){
+            return null;
+        }
+        employee.setPassword("****");
+        return employee;
+    }
+
+
+    /**
+     * 更新员工信息
+     * @param dto
+     */
+    @Override
+    public void update(EmployeeDTO dto) {
+
+        //1. 构建一个Employee对象
+        Employee employee = new Employee();
+
+        //2. 搬运数据
+        BeanUtils.copyProperties(dto,employee);
+
+        //3. 看看还缺少上面，就补充什么
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(BaseContext.getCurrentId());
+
+        employeeMapper.update(employee);
+    }
 }
