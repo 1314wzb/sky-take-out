@@ -92,8 +92,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         //3.看看employee对象还缺少什么属性没有值，缺少什么，我们就补充什么
         employee.setStatus(1);
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
+        //employee.setCreateTime(LocalDateTime.now());
+        //employee.setUpdateTime(LocalDateTime.now());
 
 
         //创建的用户和跟新的用户
@@ -106,9 +106,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         Long empId = Long.parseLong(claims.get(JwtClaimsConstant.EMP_ID).toString());*/
 
         //方法二：利用ThreadLocal这个线程获取
-        Long empId = BaseContext.getCurrentId();
-        employee.setCreateUser(empId);
-        employee.setUpdateUser(empId);
+        //Long empId = BaseContext.getCurrentId();
+        //employee.setCreateUser(empId);
+        //employee.setUpdateUser(empId);
 
         //md5加密
         String password = DigestUtils.md5DigestAsHex("123456".getBytes());
@@ -192,8 +192,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         BeanUtils.copyProperties(dto,employee);
 
         //3. 看看还缺少上面，就补充什么
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+        //employee.setUpdateTime(LocalDateTime.now());
+        //employee.setUpdateUser(BaseContext.getCurrentId());
 
         employeeMapper.update(employee);
     }

@@ -36,7 +36,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 
     /**
-     * 新增员工
+     * 新增分类
      * @param dto
      */
     @Override
@@ -62,8 +62,8 @@ public class CategoryServiceImpl implements CategoryService {
         Long empId = Long.parseLong(claims.get(JwtClaimsConstant.EMP_ID).toString());*/
 
         //方法二：利用ThreadLocal这个线程获取
-        category.setCreateUser(BaseContext.getCurrentId());
-        category.setUpdateUser(BaseContext.getCurrentId());
+        //category.setCreateUser(BaseContext.getCurrentId());
+        //category.setUpdateUser(BaseContext.getCurrentId());
 
         categoryMapper.add(category);
     }
@@ -122,8 +122,8 @@ public class CategoryServiceImpl implements CategoryService {
         BeanUtils.copyProperties(dto,category);
 
         //3. 看看还缺少上面，就补充什么
-        category.setUpdateTime(LocalDateTime.now());
-        category.setUpdateUser(BaseContext.getCurrentId());
+        //category.setUpdateTime(LocalDateTime.now());
+        //category.setUpdateUser(BaseContext.getCurrentId());
 
         categoryMapper.update(category);
     }
