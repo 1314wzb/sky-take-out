@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.SetmealDishMapper">
+
+    <!--
+        需求：给定一组菜品ID，看看这些菜品，被那些套餐包含着
+        select * from setmeal_dish where dish_id in (1,2,3)
+    -->
+    <select id="findByDishId" resultType="setmealDish">
+        select * from setmeal_dish
+        where dish_id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+</mapper>

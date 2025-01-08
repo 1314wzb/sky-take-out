@@ -6,3 +6,10 @@ sky:
     database: sky_take_out
     username: root
     password: root
+
+  cos:
+    endpoint:   # 例如：北京区域的 endpoint，具体区域请替换
+    access-key-id:               # 你的腾讯云 Access Key ID
+    access-key-secret:                        # 你的腾讯云 Access Key Secret
+    bucket-name:                      # 你的 COS 存储桶名称
+

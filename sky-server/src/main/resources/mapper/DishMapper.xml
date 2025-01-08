@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.DishMapper">
+
+    <select id="page" resultType="com.sky.vo.DishVO">
+        select d.id,d.name,d.category_id,d.price,c.name as category_name,d.image,d.status,d.update_time
+            from dish d
+            left join category c on d.category_id = c.id
+        <where>
+            <if test="name != null and name != ''">
+                and d.name like concat('%',#{name},'%')
+            </if>
+
+            <if test="categoryId != null">
+                and d.category_id = #{categoryId}
+            </if>
+
+            <if test="status != null">
+                and d.status = #{status}
+            </if>
+        </where>
+        order by d.update_time desc
+    </select>
+
+
+    <select id="page1" resultType="dish">
+        select * from dish
+        <where>
+            <if test="name != null and name != ''">
+                and name like concat('%',#{name},'%')
+            </if>
+
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+        order by update_time desc
+    </select>
+
+    <!--
+        批量删除菜品
+            需求：给定一组菜品的ID，把这些菜品都给删除了!
+            delete from dish where id in (1,2,3)
+    -->
+    <delete id="delete">
+        delete from dish
+        where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="update">
+        update dish
+        <set>
+
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+
+            <if test="categoryId != null">
+                category_id = #{categoryId},
+            </if>
+
+            <if test="price != null">
+                price = #{price},
+            </if>
+
+            <if test="image != null and image != ''">
+                image = #{image},
+            </if>
+
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+
+            <if test="status != null">
+                status = #{status},
+            </if>
+
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+
+            <if test="updateUser != null">
+                update_user = #{updateUser},
+            </if>
+        </set>
+        where id = #{id}
+        order by update_time desc
+    </update>
+
+</mapper>

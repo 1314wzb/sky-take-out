@@ -36,6 +36,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public Result handleSQLIntegrityConstraintViolationExceptionJ(SQLIntegrityConstraintViolationException e){
 
+        e.printStackTrace();
+
+
         // Duplicate entry 'lisi'for key 'employee.idx_username
 
         //1.使用异常对象获取异常的信息
