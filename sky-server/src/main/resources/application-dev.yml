@@ -8,8 +8,16 @@ sky:
     password: root
 
   cos:
-    endpoint:   # 例如：北京区域的 endpoint，具体区域请替换
-    access-key-id:               # 你的腾讯云 Access Key ID
-    access-key-secret:                        # 你的腾讯云 Access Key Secret
-    bucket-name:                      # 你的 COS 存储桶名称
+    endpoint:  # 例如：北京区域的 endpoint，具体区域请替换
+    access-key-id:  # 你的腾讯云 Access Key ID
+    access-key-secret:  # 你的腾讯云 Access Key Secret
+    bucket-name:   # 你的 COS 存储桶名称
 
+
+---
+sky:
+  redis:
+    host: 192.168.0.108
+    port: 6379
+    database: 0
+    password: 123456

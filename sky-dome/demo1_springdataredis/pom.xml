@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.sky</groupId>
+        <artifactId>sky-dome</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>demo1_springdataredis</artifactId>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+
+    <dependencies>
+        <!-- Spring Boot 测试模块，包含了单元测试相关的依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <!-- 该依赖的作用范围是 'test'，意味着仅在测试时使用 -->
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Spring Boot Web模块，提供了构建Web应用所需的所有基础设施 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <!-- 该依赖的作用范围是 'compile'，意味着在编译和运行时都会使用 -->
+            <scope>compile</scope>
+        </dependency>
+
+        <!--1. 导入依赖-->
+        <!-- Spring Boot Redis模块，提供与 Redis 数据库交互的支持 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <!-- 默认情况下没有指定作用范围，意味着这是一个 'compile' 作用域依赖 -->
+        </dependency>
+    </dependencies>
+
+
+</project>

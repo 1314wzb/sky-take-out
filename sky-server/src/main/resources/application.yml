@@ -57,7 +57,13 @@ sky:
     region: ${sky.cos.endpoint}
     bucketName: ${sky.cos.bucket-name}
 
-
-
+---
+#redis配置
+spring:
+  redis:
+    host: ${sky.redis.host}
+    port: ${sky.redis.port}
+    database: ${sky.redis.database}
+    password: ${sky.redis.password}
 
 
