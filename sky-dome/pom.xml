@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>demo1_springdataredis</module>
+        <module>demo2_httpdient</module>
     </modules>
 
     <properties>

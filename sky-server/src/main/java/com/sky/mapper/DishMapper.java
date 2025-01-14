@@ -71,4 +71,12 @@ public interface DishMapper {
             "update_time = #{updateTime},update_user = #{updateUser} where id = #{id}")*/
     void update(Dish dish);
 
+    /**
+     * 根据分类id和菜品状态 查询菜品数据
+     * @param dish
+     * @return
+     */
+    @Select("select * from dish where category_id = #{categoryId} and status = #{status}")
+    List<Dish> list(Dish dish);
+
 }

@@ -20,6 +20,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.rmi.CORBA.Util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -285,5 +286,43 @@ public class DishServiceImpl implements DishService {
 
         //调用dishMapper的update方法进行状态的更新
         dishMapper.update(dish);
+    }
+
+
+    /**
+     * 条件查询菜品和口味
+     * @param dish
+     * @return
+     */
+    @Override
+    public List<DishVO> listWithFlavor(Dish dish) {
+
+        // 1. 查询菜品数据：通过传入的 dish 对象，查询所有符合条件的菜品列表
+        List<Dish> dishList = dishMapper.list(dish);
+
+        // 2. 创建一个 List<DishVO> 用于存放每个菜品的详细信息及口味数据
+        List<DishVO> dishVOList = new ArrayList<>();
+
+        // 3. 遍历查询到的菜品列表，将每个菜品的名称和口味数据拼接到一起
+        for (Dish dish1 : dishList) {
+            // 3.1 创建一个新的 DishVO 对象，DishVO 用于展示菜品信息及口味数据
+            DishVO dishVO = new DishVO();
+
+            // 3.2 使用 BeanUtils.copyProperties 方法将 dish1 中的属性拷贝到 dishVO 中
+            // 这样 dishVO 就包含了菜品的基本信息，如名称、价格等
+            BeanUtils.copyProperties(dish1, dishVO);
+
+            // 3.3 根据菜品的 ID 获取该菜品对应的口味数据
+            List<DishFlavor> dishFlavorList = dishFlavorMapper.findById(dish1.getId());
+
+            // 3.4 把查询到的口味数据设置到 dishVO 对象的 flavors 属性中
+            dishVO.setFlavors(dishFlavorList);
+
+            // 3.5 将拼接好的 dishVO 对象添加到 dishVOList 中
+            dishVOList.add(dishVO);
+        }
+
+        // 4. 返回包含所有菜品及其口味信息的 dishVOList
+        return dishVOList;
     }
 }

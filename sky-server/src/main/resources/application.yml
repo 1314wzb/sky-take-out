@@ -41,7 +41,14 @@ sky:
     # 设置前端传递过来的令牌名称
     admin-token-name: token
 
-# 配置阿里云OSS
+    #生成用户的JWT token的时候使用的密钥
+    user-secret-key: itheima
+    #设置JWT令牌的过期时间
+    user-ttl: 7200000
+    #微信小程序每次请求携带过来的令牌的 请求头名字
+    user-token-name: authentication
+
+  # 配置阿里云OSS
 #alioss:
 #    key: xxxxx
 #    secret: xxxxx
@@ -65,5 +72,13 @@ spring:
     port: ${sky.redis.port}
     database: ${sky.redis.database}
     password: ${sky.redis.password}
+
+
+---
+#微信小程序的配置
+sky:
+  wechat:
+    appid: ${sky.wechat.appid}
+    secret: ${sky.wechat.secret}
 
 
